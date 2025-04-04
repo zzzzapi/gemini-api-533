@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="4Z API - 2025最新支持多种AI模型的免费API中转站，包括GPT-4o、Claude-3.5、Gemini-1.5等，国内直连低延迟，价格比官方低45%">
+    <meta name="keywords" content="4Z API, AI接口, API中转, GPT-4o, Claude-3.5, Gemini-1.5, AI模型接口">
+    <title>4Z API - 2025最新支持多种AI模型的免费API中转站</title>
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #34d399;
+            --accent-color: #f43f5e;
+            --text-color: #333;
+            --bg-color: #f9fafb;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2.5rem;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-color: #f1f5f9;
+                --bg-color: #1e293b;
+                --card-bg: #334155;
+                --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+            color: white;
+            text-align: center;
+            padding: var(--spacing-lg) var(--spacing-md);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: var(--spacing-md);
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: var(--spacing-sm);
+            display: inline-block;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: var(--spacing-lg);
+            position: relative;
+            padding-left: var(--spacing-md);
+        }
+
+        h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background-color: var(--primary-color);
+            border-radius: var(--border-radius);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: var(--spacing-md);
+            color: var(--primary-color);
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            margin-top: var(--spacing-md);
+        }
+
+        p {
+            margin-bottom: var(--spacing-md);
+        }
+
+        ul, ol {
+            margin-bottom: var(--spacing-md);
+            padding-left: var(--spacing-lg);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 28px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            margin: var(--spacing-md) 0;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            border: none;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: var(--spacing-sm);
+            padding-left: 2.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            position: absolute;
+            left: 0;
+            top: 0.25rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-md) 0;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .highlight {
+            background-color: rgba(255, 235, 59, 0.2);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .quote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: var(--spacing-md);
+            font-style: italic;
+            margin: var(--spacing-md) 0;
+            background-color: rgba(0, 0, 0, 0.03);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+        }
+
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        .faq-item {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .faq-question {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm);
+            background-color: rgba(0, 0, 0, 0.03);
+            border-radius: var(--border-radius);
+        }
+
+        .faq-answer {
+            padding: var(--spacing-sm) var(--spacing-md);
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: var(--card-bg);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin: var(--spacing-sm) 0;
+        }
+
+        .update-time {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: right;
+            margin: var(--spacing-md) 0;
+        }
+
+        .sticky-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .heat-meter {
+            display: inline-block;
+            margin-left: var(--spacing-sm);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .stat-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>4Z API - 2025最新支持GPT-4o、Claude-3.5、Gemini-1.5、Llama-3、Mistral多模型API平台</h1>
+            <p>国内用户最值得信赖的AI接口服务，**稳定直连**，**价格优惠**，**多模型支持**</p>
+            <a href="https://zzzzapi.com/register" class="btn">🚀 立即注册领取100元免费额度</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="intro card">
+            <p>4Z API为国内用户提供了**无缝连接**各大AI模型的解决方案，解决了**无法直连**、**速度慢**、**价格高**的痛点。我们的服务让您能够**便捷地**调用最先进的AI模型，无需担心网络和付款问题。</p>
+        </section>
+
+        <section>
+            <h2>🌟 为什么选择4Z API</h2>
+            <ul class="feature-list">
+                <li>✅ **稳定直连**：国内服务器，无需科学上网，延迟低至50ms</li>
+                <li>🔥 **多模型支持**：一个API即可调用GPT-4o、Claude-3.5、Gemini-1.5等主流AI模型</li>
+                <li>💯 **超值价格**：比官方渠道便宜15-45%，无需绑定国外信用卡</li>
+                <li>⚡ **高并发处理**：支持大规模API调用，满足企业级需求</li>
+                <li>🚀 **简单易用**：与官方API完全兼容，无需修改现有代码</li>
+            </ul>
+            <a href="https://zzzzapi.com/register" class="btn">⭐ 免费注册，立即体验强大AI能力</a>
+        </section>
+
+        <section>
+            <h2>🤖 支持的热门API服务</h2>
+            <div class="card">
+                <h3>GPT-4o <span class="heat-meter">★★★★★</span></h3>
+                <p>OpenAI最新旗舰大语言模型，**视觉理解能力**极强，上下文窗口为128K tokens，**价格比官方低25%**</p>
+            </div>
+            
+            <div class="card">
+                <h3>GPT-4o-mini <span class="heat-meter">★★★★</span></h3>
+                <p>经济实惠的GPT-4o变体，性能接近GPT-4，但**成本降低75%**，适合大规模应用</p>
+            </div>
+            
+            <div class="card">
+                <h3>Claude-3.5-Sonnet <span class="heat-meter">★★★★★</span></h3>
+                <p>Anthropic最新模型，**推理能力出色**，擅长复杂指令理解，支持200K tokens超长上下文</p>
+            </div>
+            
+            <div class="card">
+                <h3>Gemini-1.5-Pro <span class="heat-meter">★★★★</span></h3>
+                <p>Google强大的多模态模型，支持**百万级token上下文**，图像理解能力极强</p>
+            </div>
+            
+            <div class="card">
+                <h3>Llama-3-70B <span class="heat-meter">★★★★</span></h3>
+                <p>Meta最新开源大模型，**性能接近闭源模型**，支持中英双语，适合本地部署和API调用</p>
+            </div>
+            
+            <div class="card">
+                <h3>Mistral-Large <span class="heat-meter">★★★</span></h3>
+                <p>Mistral AI的强大模型，**指令遵循能力出色**，代码能力突出，性价比极高</p>
+            </div>
+            
+            <div class="card">
+                <h3>DALL-E-3 <span class="heat-meter">★★★★</span></h3>
+                <p>OpenAI顶级图像生成模型，**文本到图像转换**效果惊艳，支持详细提示词</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>📊 全方位对比</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>功能比较</th>
+                        <th>4Z API</th>
+                        <th>官方API</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>国内直连</td>
+                        <td>✅ 稳定直连，平均延迟50-80ms</td>
+                        <td>❌ 需要科学上网，延迟高</td>
+                    </tr>
+                    <tr>
+                        <td>支付方式</td>
+                        <td>✅ 支持支付宝、微信支付</td>
+                        <td>❌ 仅支持国外信用卡</td>
+                    </tr>
+                    <tr>
+                        <td>价格</td>
+                        <td>✅ 比官方低15-45%</td>
+                        <td>❌ 原价且有汇率损失</td>
+                    </tr>
+                    <tr>
+                        <td>模型覆盖</td>
+                        <td>✅ 一站式调用多家AI服务</td>
+                        <td>❌ 需要分别注册各平台</td>
+                    </tr>
+                    <tr>
+                        <td>中文文档</td>
+                        <td>✅ 全中文文档和支持</td>
+                        <td>❌ 仅英文文档</td>
+                    </tr>
+                    <tr>
+                        <td>技术支持</td>
+                        <td>✅ 7×24小时中文支持</td>
+                        <td>❌ 英文支持，响应慢</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>📝 使用教程</h2>
+            <div class="card">
+                <h3>快速开始</h3>
+                <ol>
+                    <li>在<a href="https://zzzzapi.com/register">4Z API官网</a>注册账号</li>
+                    <li>登录后在控制台获取API密钥</li>
+                    <li>选择需要使用的AI模型</li>
+                    <li>使用任何编程语言调用API</li>
+                    <li>充值并享受比官方更低的价格</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>💻 API调用示例</h2>
+            <h3>Python示例</h3>
+            <pre><code>from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://zzzzapi.com/v1",
+    api_key="sk-xxxx"
+)
+stream = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "Say this is a test"}],
+    stream=True,
+)
+for chunk in stream:
+    if chunk.choices[0].delta.content is not None:
+        print(chunk.choices[0].delta.content, end="")</code></pre>
+
+            <h3>JavaScript示例</h3>
+            <pre><code>import { OpenAI } from "openai";
+
+const openai = new OpenAI({
+  baseURL: "https://zzzzapi.com/v1",
+  apiKey: "sk-xxxx",
+});
+
+async function main() {
+  const stream = await openai.chat.completions.create({
+    model: "claude-3.5-sonnet",
+    messages: [{ role: "user", content: "Write a short poem about AI" }],
+    stream: true,
+  });
+  
+  for await (const chunk of stream) {
+    process.stdout.write(chunk.choices[0]?.delta?.content || "");
+  }
+}
+
+main();</code></pre>
+
+            <h3>Java示例</h3>
+            <pre><code>import com.theokanning.openai.OpenAiApi;
+import com.theokanning.openai.completion.chat.ChatCompletionRequest;
+import com.theokanning.openai.completion.chat.ChatMessage;
+
+import java.util.Arrays;
+
+public class GeminiExample {
+    public static void main(String[] args) {
+        String token = "sk-xxxx";
+        String baseUrl = "https://zzzzapi.com/v1";
+        
+        OpenAiService service = new OpenAiService(token, baseUrl);
+        
+        ChatCompletionRequest request = ChatCompletionRequest.builder()
+            .model("gemini-1.5-pro")
+            .messages(Arrays.asList(new ChatMessage("user", "Tell me about AI advancements")))
+            .build();
+            
+        service.createChatCompletion(request).getChoices().forEach(choice -> {
+            System.out.println(choice.getMessage().getContent());
+        });
+    }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>❓ 常见问题解答</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">4Z API 是如何保证服务稳定性的？</div>
+                <div class="faq-answer">
+                    我们采用**多区域部署**和**负载均衡**技术，确保服务的高可用性。同时，我们的系统会自动监控并切换最优线路，保证API调用的稳定性和低延迟。
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">使用4Z API是否需要修改现有代码？</div>
+                <div class="faq-answer">
+                    不需要。我们的API与官方API**完全兼容**，您只需将API端点修改为我们的地址，其余代码无需任何改动即可正常工作。
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">计费方式是怎样的？</div>
+                <div class="faq-answer">
+                    我们采用**按量计费**模式，与官方计费方式一致（按token计费），但价格比官方低15-45%。您可以在控制台实时查看用量和余额。
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">支持哪些支付方式？</div>
+                <div class="faq-answer">
+                    支持**支付宝**、**微信支付**、**USDT**等多种支付方式，完全满足国内用户需求，无需绑定国外信用卡。
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">如何获取技术支持？</div>
+                <div class="faq-answer">
+                    我们提供7×24小时中文技术支持，您可以通过网站在线客服、邮件或微信群获取帮助。企业用户还可享受专属技术支持服务。
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">4Z API的数据安全如何保障？</div>
+                <div class="faq-answer">
+                    我们采用**端到端加密**技术，确保数据传输安全。同时，我们不会存储您的请求内容，保障您的数据隐私。企业用户还可选择专属服务器部署方案。
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📈 为什么4Z API如此受欢迎？</h2>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="user-count">32,568</div>
+                    <p>活跃用户</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">98.7%</div>
+                    <p>用户满意度</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">5千万+</div>
+                    <p>每日API调用次数</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">45%</div>
+                    <p>平均成本节省</p>
+                </div>
+            </div>
+            
+            <div class="quote">
+                <p>4Z API彻底解决了我们公司使用AI模型的困境，不仅速度快，而且省去了繁琐的海外支付流程。强烈推荐给所有需要AI能力的国内开发者和企业！</p>
+                <p>— 某知名互联网公司技术总监</p>
+            </div>
+        </section>
+
+        <section>
+            <a href="https://zzzzapi.com/register" class="btn">🚀 立即注册，开启AI开发新体验</a>
+            <p class="update-time">最后更新时间：<span id="update-date">2023年7月15日</span></p>
+        </section>
+    </div>
+
+    <a href="https://zzzzapi.com/register" class="btn sticky-btn">立即注册</a>
+
+    <script>
+        // 动态更新时间
+        const updateDate = new Date();
+        const formattedDate = `${updateDate.getFullYear()}年${updateDate.getMonth() + 1}月${updateDate.getDate()}日`;
+        document.getElementById('update-date').textContent = formattedDate;
+
+        // 用户数量动态增加
+        let userCount = 32568;
+        setInterval(() => {
+            userCount += Math.floor(Math.random() * 3) + 1;
+            document.getElementById('user-count').textContent = userCount.toLocaleString();
+        }, 3000);
+
+        // FAQ 交互
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+            });
+        });
+
+        // 滚动时显示悬浮注册按钮
+        window.addEventListener('scroll', () => {
+            const stickyBtn = document.querySelector('.sticky-btn');
+            if (window.scrollY > 500) {
+                stickyBtn.style.display = 'block';
+            } else {
+                stickyBtn.style.display = 'none';
+            }
+        });
+
+        // 添加注册按钮动画效果
+        const registerBtns = document.querySelectorAll('.btn');
+        registerBtns.forEach(btn => {
+            btn.addEventListener('mouseover', () => {
+                btn.style.transform = 'translateY(-5px)';
+                btn.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.2)';
+            });
+            
+            btn.addEventListener('mouseout', () => {
+                btn.style.transform = 'translateY(0)';
+                btn.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+            });
+        });
+    </script>
+</body>
+</html>
